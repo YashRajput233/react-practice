@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-function Form() {
+function Form(props) {
   const [isvisible, setVisible] = useState("");
   const [toDoList, setToDoList] = useState([]);
   // const[num,setNum]=useState(0)
@@ -9,6 +9,9 @@ function Form() {
     setVisible(e.target.value);
   };
   const onclickhandler = () => {
+    props.addData({
+      email:isvisible
+    })
     if (isvisible === "") {
       alert("write a something");
     } else {
@@ -27,6 +30,7 @@ function Form() {
 
   return (
     <>
+      <h1>Form</h1>
       <input
         type="text"
         value={isvisible}
