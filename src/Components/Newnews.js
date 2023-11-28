@@ -32,9 +32,6 @@ function Newnews() {
     <>
       <input type="text" onChange={onChangeHandler} value={data} />
       <button onClick={onClickHandler}>Add</button>
-      {array.map((e) => (
-        <li>{e}</li>
-      ))}
       <br/>
       _______________________________________________________________
       {newData.map((e) => (

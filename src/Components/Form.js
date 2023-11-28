@@ -1,21 +1,24 @@
 import React from "react";
-import { useState } from "react";
-
+import { useState,useRef,useContext} from "react";
+import { ContextStore } from "../Store";
 function Form(props) {
+  const storeVal =  useContext(ContextStore);
   const [isvisible, setVisible] = useState("");
   const [toDoList, setToDoList] = useState([]);
+  const refec =useRef()
   // const[num,setNum]=useState(0)
   const onChangehandler = (e) => {
     setVisible(e.target.value);
   };
   const onclickhandler = () => {
-    props.addData({
+    storeVal.addData({
       email:isvisible
     })
     if (isvisible === "") {
       alert("write a something");
     } else {
       setVisible("");
+      refec.current.focus()
       setToDoList([...toDoList, isvisible]);
       // console.log(...toDoList);
     }
@@ -33,6 +36,7 @@ function Form(props) {
       <h1>Form</h1>
       <input
         type="text"
+        ref={refec}
         value={isvisible}
         onChange={onChangehandler}
         placeholder="write a list"
