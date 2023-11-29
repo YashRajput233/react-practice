@@ -1,6 +1,6 @@
 import React, { useContext,useEffect } from 'react'
 import { ContextStore } from "../Store";
-function News(props) {
+function News() {
   const storeVal =  useContext(ContextStore);
     useEffect(()=>{
        async function asdf(){

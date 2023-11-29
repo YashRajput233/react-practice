@@ -1,35 +1,44 @@
-import React from "react";
-import { useState,useRef,useContext} from "react";
+import React, { useReducer } from "react";
+import { useState, useRef, useContext } from "react";
 import { ContextStore } from "../Store";
-function Form(props) {
-  const storeVal =  useContext(ContextStore);
+
+let init = {count:0};
+const changenum = (state, action) => {
+  if (action.type === "increment") {
+    return {count:state.count++ + action.value}
+  } else if (action.type === "decremet") {
+    return {count:state.count--}
+  } else {
+    return {count:state};
+  }
+};
+
+function Form() {
+  const storeVal = useContext(ContextStore);
   const [isvisible, setVisible] = useState("");
   const [toDoList, setToDoList] = useState([]);
-  const refec =useRef()
-  // const[num,setNum]=useState(0)
+  const refec = useRef();
+
+  const [state, dispatch] = useReducer(changenum, init);
+
+  // console.log("state ==> 2", val);
+
   const onChangehandler = (e) => {
     setVisible(e.target.value);
   };
   const onclickhandler = () => {
     storeVal.addData({
-      email:isvisible
-    })
+      email: isvisible,
+    });
     if (isvisible === "") {
       alert("write a something");
     } else {
       setVisible("");
-      refec.current.focus()
+      refec.current.focus();
       setToDoList([...toDoList, isvisible]);
       // console.log(...toDoList);
     }
   };
-
-  // const increase=()=>{
-  //   setNum(num+1)
-  // }
-  // const decrease=()=>{
-  //   setNum(num-1)
-  // }
 
   return (
     <>
@@ -45,9 +54,21 @@ function Form(props) {
       {toDoList.map((ele) => (
         <li>{ele}</li>
       ))}
-      {/* <h1>{num}</h1>
-    <button onClick={increase}>increase</button>
-    <button onClick={decrease}>increase</button> */}
+      <h1>{state.count}</h1>
+      <button
+        onClick={() => {
+          dispatch({ type: "increment", value: 4 });
+        }}
+      >
+        increment
+      </button>
+      <button
+        onClick={() => {
+          dispatch({ type: "decremet", value: 4 });
+        }}
+      >
+        decremet
+      </button>
     </>
   );
 }
